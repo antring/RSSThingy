@@ -1,30 +1,20 @@
 import feedparser
+import urllib2
 
-#------------------------------------------
-class Reader:
-	"""docstring for Reader"""
-	def __init__(self,rssfeed):
-		self.rss = feedparser.parse(rssfeed)
-		self.feedTitle = self.rss['feed']['title']
-		self.rssLen = len(self.rss.entries)
+def rssChecker():
+	d = feedparser.parse('http://www.p4.no/lyttesenter/podcast.ashx?pid=330')
+	feedTitle = d['feed']['title']
+	rssLen = len(d.entries)
 
-	def printshit(self): #for testing only, deleting soon(tm)
-		print self.feedTitle
-		print self.rssLen
+	return feedTitle,rssLen
 
-		
-#------------------------------------------
-
-class downloader(object):
-	"""docstring for downloader"""
-	def __init__(self):
-		pass
-
-#------------------------------------------
+def downloader(podcastUrl):
+	pass
 
 if __name__ == '__main__':
-	test = Reader('http://www.p4.no/lyttesenter/podcast.ashx?pid=330')
-	Reader.printshit(test)
+	print rssChecker()[0]
+
+
 
 #Need class for downloading and class for reading. Reading class is opening feed, identifying if there are new podcasts.
 
