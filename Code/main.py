@@ -1,18 +1,42 @@
 import feedparser
-import urllib2
+import urllib
+#import logging
 
-def rssChecker():
-	d = feedparser.parse('http://www.p4.no/lyttesenter/podcast.ashx?pid=330')
-	feedTitle = d['feed']['title']
-	rssLen = len(d.entries)
+def rssChecker(s,bluhblah):
+	rssLen = len(s.entries)
+	podLink = s.entries[0].link
+	podName = s.entries[0].title
 
-	return feedTitle,rssLen
+	return (podLink,podName)
 
-def downloader(podcastUrl):
-	pass
+def checker(s,bluhblah):
+	i = 0
+		for line in bluhblah:
+			podName = s.entries[i].title
+			if podName == line:
+				podState = True
+			else:
+				podState = False
+				i += 1
+
+
+def downloader(podcastUrl,filename,bluhblah):
+	fileRetriever = urllib.URLopener()
+	try:
+		fileRetriever.retrieve(podcastUrl, filename + '.mp3')
+		bluhblah.write(filename + "\n")
+		bluhblah.close()
+	except Exception, e:
+		raise e
+		#Could throw in some logging here..
 
 if __name__ == '__main__':
-	print rssChecker()[0]
+	#while True:
+		foo = open("bar.txt", "wb")
+		podStream = feedparser.parse('http://www.p4.no/lyttesenter/podcast.ashx?pid=330')
+
+		downloader(rssChecker(podStream)[0],rssChecker(podStream)[1],foo)
+		#time.sleep(86400) #Sleep for 24 hours. 
 
 
 
