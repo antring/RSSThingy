@@ -1,6 +1,7 @@
 import feedparser
 import urllib
 import os
+import time
 
 def rssInfoRunner(stream):
 	rssLen = len(stream.entries)
@@ -25,13 +26,16 @@ def downloader(podcastUrl,filename):
 	fileRetriever = urllib.URLopener()
 	try:
 		fileRetriever.retrieve(podcastUrl, filename + '.mp3')
+		f = open('log.txt','a')
+		f.write('(+)Downloaded ' + filename + ' - ' + time.asctime(time.localtime(time.time())) + ('\n'))
+		f.close()
 	except Exception, e:
-		raise e
-
+		f = open('log.txt', 'a')
+		f.write('(!)Downloader error ' + e + time.asctime(time.localtime(time.time())) + ('\n'))
+		f.close()
 if __name__ == '__main__':
-	#while True:
+	while True:
 		podStream = feedparser.parse('http://www.p4.no/lyttesenter/podcast.ashx?pid=330')
 		if Checker(rssInfoRunner(podStream)[1]) == False:
 			downloader(rssInfoRunner(podStream)[0],rssInfoRunner(podStream)[1])
-			print 'Downloading ' + rssInfoRunner(podStream)[1]
-		#time.sleep(86400) #Sleep for 24 hours. 
+		time.sleep(86400) #Sleep for 24 hours. 
