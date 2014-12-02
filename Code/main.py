@@ -12,6 +12,7 @@ def rssInfoRunner(stream):
 
 def Checker(fu):
 	folder = os.walk("E:\Git Prosjekter\RSSThingy\Code")
+	epList = []
 
 	for ep in folder:
 		epList = ep[2]
