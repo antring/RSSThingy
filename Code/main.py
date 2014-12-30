@@ -20,7 +20,6 @@ def Checker(fu):
 	for thing in epList:	
 		if thing.find(fu) == 0:
 			return True
-
 	return False
 
 def downloader(podcastUrl,filename):
